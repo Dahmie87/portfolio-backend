@@ -1,5 +1,7 @@
 from fastapi import FastAPI
 from routes import router
+
+
 # from fastapi
 
 app = FastAPI(title="Portfolio 3D API", version="1.0.0")
@@ -12,4 +14,10 @@ async def root():
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="localhost", port=8000)
+    import os
+    from dotenv import load_dotenv  # pyright: ignore[reportMissingImports]
+    load_dotenv()
+
+    host = os.getenv("HOST", "localhost")
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run(app, host=host, port=port)
