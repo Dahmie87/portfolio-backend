@@ -56,16 +56,26 @@ def list_all_posts(db: Session = Depends(get_db)):
     pass
 
 
-@router.get('/api/posts{id}')
-def find_post(iid: int, db: Session = Depends(get_db)):
+@router.get('/api/posts{post_id}')
+def find_post(post_id: int, db: Session = Depends(get_db)):
     pass
 
 
-@router.put('/api/posts/{id}')
-def update_post(id: int, post: PostUpdate, db: Session = Depends(get_db)):
+@router.put('/api/posts/{post_id}')
+def update_post(post_id: int, post: PostUpdate, db: Session = Depends(get_db)):
     pass
 
 
-@router.delete('/api/posts/{id}')
-def delete_post(id: int, db: Session = Depends(get_db)):
+@router.delete('/api/posts/{post_id}')
+def delete_post(post_id: int, db: Session = Depends(get_db)):
+    pass
+
+
+@router.post("/api/log-visitor")
+def log_visitor(request_data: dict, db: Session = Depends(get_db)):
+    pass
+
+
+@router.post("/api/stats")
+def get_stats(db: Session = Depends(get_db)):
     pass
