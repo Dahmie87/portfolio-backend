@@ -2,30 +2,26 @@ from fastapi import APIRouter, Depends
 from pydantic import BaseModel
 from database import get_db
 from sqlalchemy.orm import Session
-from typing import List
+
 
 import services
 
 
 class ContactMessage(BaseModel):
-    id: int
     name: str
     email: str
     content: str
 
 
 class PostCreate(BaseModel):
-    id: int
     title: str
-    topic: str
-    date: str
-    tags: List[str]
+    category: str
+
     content: str
 
 
 class PostUpdate(BaseModel):
     title: str = None  # type: ignore
-    tags: List[str] = None  # type: ignore
     content: str = None  # type: ignore
 
 
@@ -35,7 +31,6 @@ router = APIRouter()
 @router.post("/api/contact")
 def submit_contact(data: ContactMessage, db: Session = Depends(get_db)):
     return {
-        "id": data.id,
         "name": data.name,
         "status": "message srnt succesfully"
     }
