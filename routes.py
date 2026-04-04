@@ -24,7 +24,6 @@ class PostCreate(BaseModel):
 
 
 class PostUpdate(BaseModel):
-    title: str
-    topic: str
-    tags: List[str]
-    content: str
+    title: str = None  # type: ignore
+    tags: List[str] = None  # type: ignore
+    content: str = None  # type: ignore
