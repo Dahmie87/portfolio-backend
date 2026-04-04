@@ -26,7 +26,7 @@ class Post(Base):
                         onupdate=datetime.utcnow)
 
 
-class Visitors(Base):
+class Visitor(Base):
     __tablename__ = 'visitors'
 
     id = Column(Integer, primary_key=True)

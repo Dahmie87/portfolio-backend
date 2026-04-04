@@ -16,7 +16,6 @@ class ContactMessage(BaseModel):
 class PostCreate(BaseModel):
     title: str
     category: str
-
     content: str
 
 
