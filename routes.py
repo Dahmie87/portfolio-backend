@@ -10,7 +10,7 @@ import services
 class ContactMessage(BaseModel):
     name: str
     email: str
-    content: str
+    message: str
 
 
 class PostCreate(BaseModel):
@@ -27,49 +27,66 @@ class PostUpdate(BaseModel):
 router = APIRouter()
 
 
-@router.post("/api/contact")
+@router.post("/contact")
 def submit_contact(data: ContactMessage, db: Session = Depends(get_db)):
+    contact = services.create_contact(db, data.name, data.email, data.message)
     return {
-        "name": data.name,
-        "status": "message srnt succesfully"
+        "id": contact.id,
+        "name": contact.name,
+        "status": "Contact saved succesfully"
     }
 
 
-@router.get('/api/list_contacts')
+@router.get('/list_contacts')
 def list_contact(db: Session = Depends(get_db)):
-    pass
+    contacts = services.get_all_contacts(db)
+    return {
+        "total": len(contacts),
+        "contacts": [{
+            "id": c.id,
+            "name": c.name,
+            "email": c.email,
+            "message": c.message,
+            "created_at": c.created_at
+        } for c in contacts]
+    }
 
 
-@router.post("/api/post")
-def create_new_post(post: PostCreate):
-    pass
+@router.post("/post")
+def create_new_post(data: PostCreate, db: Session = Depends(get_db)):
+    post = services.create_post(db, data.title, data.category, data.content)
+    return {
+        "id": post.id,
+        "title": post.title,
+        "details": "post sucessfull"
+    }
 
 
-@router.get('/api/posts')
+@router.get('/posts')
 def list_all_posts(db: Session = Depends(get_db)):
-    pass
+    return {"message": "hello!!"}
 
 
-@router.get('/api/posts{post_id}')
+@router.get('/posts{post_id}')
 def find_post(post_id: int, db: Session = Depends(get_db)):
     pass
 
 
-@router.put('/api/posts/{post_id}')
+@router.put('/posts/{post_id}')
 def update_post(post_id: int, post: PostUpdate, db: Session = Depends(get_db)):
     pass
 
 
-@router.delete('/api/posts/{post_id}')
+@router.delete('/posts/{post_id}')
 def delete_post(post_id: int, db: Session = Depends(get_db)):
     pass
 
 
-@router.post("/api/log-visitor")
+@router.post("/log-visitor")
 def log_visitor(request_data: dict, db: Session = Depends(get_db)):
     pass
 
 
-@router.post("/api/stats")
+@router.post("/stats")
 def get_stats(db: Session = Depends(get_db)):
     pass

@@ -8,10 +8,11 @@ from dotenv import load_dotenv  # type: ignore
 
 load_dotenv()
 DB_URL = os.getenv("DATABASE_URL")
+if not DB_URL:
+    DB_URL = "sqlite:///./app.db"
 
-engine = create_engine(DB_URL  # type: ignore
-                       , connect_args={
-                           "check_same_thread": False})
+engine = create_engine(DB_URL, connect_args={
+    "check_same_thread": False})
 
 session = sessionmaker(bind=engine)
 
